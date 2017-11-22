@@ -34,7 +34,7 @@ installation scripts.
 
 Next, run the scripts to install EAP 7.1 and set `JAVA_OPTS` to
 override the default `java.security` policy file. The overridden
-file will set the Bouncy Castle FIPS as the first provider and
+file will set Bouncy Castle FIPS as the first provider and
 enable "FIPS mode" for the SunJSSE provider.
 
     ./clean.sh
@@ -43,7 +43,7 @@ enable "FIPS mode" for the SunJSSE provider.
 
 ## Run Various Hardening Tasks
 The list of tasks map to the STIG identifiers in the EAP 6.3 STIG.
-The task sets the management interface to use TLSv1.2 with a
+The first task sets the management interface to use TLSv1.2 with a
 self-signed certificate and the BCFIPS provider.
 
     ./SV-76563r1_rule.sh
