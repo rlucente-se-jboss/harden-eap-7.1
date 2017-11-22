@@ -1,0 +1,19 @@
+#
+# This CLI script sets a self-signed certificate on the management interface
+# to secure https.  This enables one-way SSL/TLS using Bouncy Castle and
+# TLSv1.2.
+#
+# Run it from WORK_DIR as:
+# $JBOSS_HOME/bin/jboss-cli.sh --file=SV-76563r1_rule.cli
+#
+
+embed-server --server-config=standalone.xml
+
+/subsystem=elytron/key-store=httpsKS:add(path=keystore.bcfks,relative-to=jboss.server.config.dir,provider-name=BCFIPS,credential-reference={clear-text=secret},type=BCFKS)
+/subsystem=elytron/key-manager=httpsKM:add(key-store=httpsKS,credential-reference={clear-text=secret})
+/subsystem=elytron/server-ssl-context=httpsSSC:add(key-manager=httpsKM,protocols=["TLSv1.2"])
+/core-service=management/management-interface=http-interface:write-attribute(name=ssl-context, value=httpsSSC)
+/core-service=management/management-interface=http-interface:write-attribute(name=secure-socket-binding, value=management-https)
+
+stop-embedded-server
+
