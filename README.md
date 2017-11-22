@@ -52,3 +52,5 @@ self-signed certificate and the BCFIPS provider.
 There's a good reference of Elytron CLI commands
 [here](https://docs.jboss.org/author/display/WFLY/Using+the+Elytron+Subsystem).
 
+## Status
+This is a WORK IN PROGRESS!  Many things are missing and the requirements must be consistent with each other.  The first task to secure the management interface must also mask the keystore password using a credential store and likely be enabled for two-way client certificates.  That work remains to be done.  All pull requests welcome!
