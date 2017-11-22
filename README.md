@@ -1,5 +1,5 @@
 # Harden EAP 7.1
-This guide provides instructions to help guide the hardening of EAP 7.1.  Rules are copied from the DISA EAP 6.3 STIG and adapted for EAP 7.1.
+This guide provides instructions for the hardening of EAP 7.1.  Rules are copied from the DISA EAP 6.3 STIG and adapted for EAP 7.1.
 
 ## Install Operating System
 First, install RHEL 7.4 and create a user account with administrator
