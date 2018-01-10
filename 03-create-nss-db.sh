@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # make sure that all certs are available
-if [ -r "$HOME/server.p12" -a -r "$HOME/client.p12" ]
+if [ -r "$HOME/ca.cert.pem" -a -r "$HOME/intermediate.cert.pem" -a -r "$HOME/server.p12" -a -r "$HOME/client.p12" ]
 then
     echo "All needed certificates found."
 else
@@ -19,13 +19,14 @@ modutil -force -dbdir $HOME/fipsdb -create
 modutil -force -dbdir $HOME/fipsdb -fips true
 modutil -force -dbdir $HOME/fipsdb -changepw "NSS FIPS 140-2 Certificate DB" -newpwfile pwdfile.txt
 
-# import server cert, key, and CAs
-pk12util -i $HOME/server.p12 -d $HOME/fipsdb -k pwdfile.txt -w pwdfile.txt
+# import root CA with appropriate trust args
+certutil -A -n root_ca -t "TC,C,C" -f pwdfile.txt -d $HOME/fipsdb -i $HOME/ca.cert.pem
 
-# trust intermediate and root authorities
-echo "When requested, token PIN is $(cat pwdfile.txt)"
-certutil -M -n 'Red Hat Root CA Test - Red Hat' -t 'TC,C,C' -d $HOME/fipsdb
-certutil -M -n 'Red Hat Intermediate CA Test - Red Hat' -t 'TC,C,C' -d $HOME/fipsdb
+# import intermediate CA
+certutil -A -n intermediate_ca -t "T,," -f pwdfile.txt -d $HOME/fipsdb -i $HOME/intermediate.cert.pem
+
+# import server cert and key
+pk12util -i $HOME/server.p12 -d $HOME/fipsdb -k pwdfile.txt -w pwdfile.txt
 
 rm -f pwdfile.txt
 
@@ -36,7 +37,8 @@ echo "    $HOME/fipsdb"
 echo "    $HOME/java.security.properties"
 echo "    $HOME/nss-pkcs11-fips.cfg"
 echo
-echo "The client cert, key, and cert chain are available in pkcs12 format here:"
+echo "The client cert, key, and trusted root CA are available in these files:"
 echo
 echo "    $HOME/client.p12"
+echo "    $HOME/ca.cert.pem"
 echo

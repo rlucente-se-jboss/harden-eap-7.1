@@ -1,3 +1,6 @@
+# Harden EAP 7.1
+
+## Create certificates
 Install RHEL 7.4 and put it into FIPS mode, following these
 [instructions](https://github.com/rlucente-se-jboss/intranet-test-certs).
 Make sure to provide the needed certificates and keys to the
@@ -5,7 +8,7 @@ unprivileged user directory that will be installing JBoss EAP 7.1.
 As root, do the following to make the certificates available:
 
     cd /root
-    cp *.p12 ~jboss
+    cp *.p12 *.pem ~jboss
     chown jboss:jboss ~jboss/*
 
 Those commands assume that the unprivileged user name is `jboss`.
@@ -27,4 +30,8 @@ the following commands:
     ./05-create-credentialstore.sh
     ./06-configure-tls.sh
     ./07-secure-management-interface.sh
+
+## Configure the browser
+Import the file `~/ca.cert.pem` as a trusted certificate authority.
+Import the file `~/client.p12` as the client certificate and key.
 
