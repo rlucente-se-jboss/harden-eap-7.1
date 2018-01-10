@@ -19,7 +19,7 @@ modutil -force -dbdir $HOME/fipsdb -create
 modutil -force -dbdir $HOME/fipsdb -fips true
 modutil -force -dbdir $HOME/fipsdb -changepw "NSS FIPS 140-2 Certificate DB" -newpwfile pwdfile.txt
 
-# import server cert and key
+# import server cert, key, and CAs
 pk12util -i $HOME/server.p12 -d $HOME/fipsdb -k pwdfile.txt -w pwdfile.txt
 
 # trust intermediate and root authorities
