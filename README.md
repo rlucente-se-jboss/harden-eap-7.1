@@ -13,7 +13,7 @@ As root, do the following to make the certificates available:
 
 Those commands assume that the unprivileged user name is `jboss`.
 
-## Configure security database
+## Configure server
 Login as an unprivileged user and run the following commands:
 
     mkdir ~/eap-demo
