@@ -2,7 +2,7 @@
 
 ## Create certificates
 Install RHEL 7.4 and put it into FIPS mode, following these
-[instructions](https://github.com/rlucente-se-jboss/intranet-test-certs).
+[instructions](https://github.com/rlucente-se-jboss/intranet-test-certs/tree/nss).
 Make sure to provide the needed certificates and keys to the
 unprivileged user directory that will be installing JBoss EAP 7.1.
 As root, do the following to make the certificates available:
